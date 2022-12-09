@@ -89,5 +89,25 @@ namespace testesapi.tests
             Exception exception = Assert.Throws<TextoMalucoException>(act);
             Assert.Equal("hu3", exception.Message);
         }
+
+        [Fact]
+        public void ShouldThrowFirstException()
+        {
+            // Arrange
+            var s = new ServiceService();
+
+            var input = new DTOs.AInput
+            {
+                Num = -999,
+                Txt = "huehuehue brbr"
+            };
+
+            // Act
+            Action act = () => s.FuncaoA(input);
+
+            // Assert
+            Exception exception = Assert.Throws<Exception>(act);
+            Assert.Equal("Deu Ruim", exception.Message);
+        }
     }
 }
