@@ -2,6 +2,8 @@
 {
     public class TextoMalucoException : Exception
     {
-        public TextoMalucoException(string message) : base(message) { }
+        public TextoMalucoException(string message) : base(message)
+        {
+        }
     }
 }
