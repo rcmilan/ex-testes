@@ -14,7 +14,7 @@ namespace TestesApi.Controllers
             this.pokeApi = pokeApi;
         }
 
-        [HttpGet]
+        [HttpGet("{number}")]
         public async Task<IActionResult> Get(int number)
         {
             var apiResponse = await pokeApi.Get(number);

@@ -1,0 +1,37 @@
+{
+  "consumer": {
+    "name": "PokeApiConsumer"
+  },
+  "interactions": [
+    {
+      "description": "Get Pokemon",
+      "providerStates": [
+        {
+          "name": "Pokedex Id"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/pokemon/0"
+      },
+      "response": {
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "status": 404
+      }
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.0",
+      "models": "1.0.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "PokeApi"
+  }
+}
