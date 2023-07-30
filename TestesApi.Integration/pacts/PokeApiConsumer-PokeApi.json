@@ -15,10 +15,16 @@
         "path": "/pokemon/0"
       },
       "response": {
+        "body": {
+          "Height": 0,
+          "Id": 0,
+          "Name": "name",
+          "Weight": 0
+        },
         "headers": {
           "Content-Type": "application/json; charset=utf-8"
         },
-        "status": 404
+        "status": 200
       }
     }
   ],
