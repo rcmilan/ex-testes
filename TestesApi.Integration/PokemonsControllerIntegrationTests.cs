@@ -9,14 +9,14 @@ using TestesApi.HttpServices;
 
 namespace TestesApi.Integration
 {
-    public class PokemonsControllerTests
+    public class PokemonsControllerIntegrationTests
     {
         private readonly HttpClient httpClient;
         private readonly IPactBuilderV3 pactBuilder;
 
         private readonly int pactPort = 1337;
 
-        public PokemonsControllerTests()
+        public PokemonsControllerIntegrationTests()
         {
             pactBuilder = Pact.V3("PokeApiConsumer", "PokeApi", new PactConfig())
                 .WithHttpInteractions(pactPort);
