@@ -8,6 +8,7 @@ namespace TestesApi.Controllers
     public class PokemonsController : ControllerBase
     {
         private readonly IPokeApi pokeApi;
+
         public PokemonsController(IPokeApi pokeApi)
         {
             this.pokeApi = pokeApi;
@@ -26,6 +27,5 @@ namespace TestesApi.Controllers
                 statusCode: (int)apiResponse.StatusCode
             );
         }
-
     }
 }
