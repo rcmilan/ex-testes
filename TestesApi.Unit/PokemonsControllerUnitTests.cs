@@ -3,6 +3,7 @@ using Moq;
 using System.Net;
 using TestesApi.Controllers;
 using TestesApi.HttpServices;
+using TestesApi.Services;
 
 namespace TestesApi.Unit
 {
@@ -11,12 +12,14 @@ namespace TestesApi.Unit
         private readonly PokemonsController controller;
 
         private readonly Mock<IPokeApi> mockPokeApi;
+        private readonly Mock<IPokemonLoggerService> mockLogger;
 
         public PokemonsControllerUnitTests()
         {
             mockPokeApi = new Mock<IPokeApi>();
+            mockLogger = new Mock<IPokemonLoggerService>();
 
-            controller = new PokemonsController(mockPokeApi.Object);
+            controller = new PokemonsController(mockPokeApi.Object, mockLogger.Object);
         }
 
         [Theory]

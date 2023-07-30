@@ -1,11 +1,13 @@
 using Refit;
 using TestesApi.HttpServices;
+using TestesApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddSingleton(RestService.For<IPokeApi>(builder.Configuration.GetValue<string>("PokeApiV2")!));
+builder.Services.AddSingleton<IPokemonLoggerService, PokemonLoggerService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

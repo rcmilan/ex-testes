@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TestesApi.HttpServices;
+using TestesApi.Services;
 
 namespace TestesApi.Controllers
 {
@@ -8,10 +9,12 @@ namespace TestesApi.Controllers
     public class PokemonsController : ControllerBase
     {
         private readonly IPokeApi pokeApi;
+        private readonly IPokemonLoggerService logger;
 
-        public PokemonsController(IPokeApi pokeApi)
+        public PokemonsController(IPokeApi pokeApi, IPokemonLoggerService logger)
         {
             this.pokeApi = pokeApi;
+            this.logger = logger;
         }
 
         [HttpGet("{number}")]
@@ -20,7 +23,10 @@ namespace TestesApi.Controllers
             var apiResponse = await pokeApi.Get(number);
 
             if (apiResponse.IsSuccessStatusCode)
+            {
+                logger.Log(apiResponse.Content);
                 return Ok(apiResponse.Content);
+            }
 
             return Problem(
                 detail: apiResponse.ReasonPhrase,
