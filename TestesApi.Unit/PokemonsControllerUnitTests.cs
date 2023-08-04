@@ -26,7 +26,7 @@ namespace TestesApi.Unit
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(150)]
-        public async Task GetPokemon(int id)
+        public async Task ShouldGetPokemon(int id)
         {
             // Arrange
             var mockResult = new Refit.ApiResponse<DTOs.Pokemon>(
@@ -44,6 +44,27 @@ namespace TestesApi.Unit
             mockPokeApi.Verify(m => m.Get(id, CancellationToken.None), Times.AtLeastOnce);
 
             Assert.Equal((int)HttpStatusCode.OK, result!.StatusCode);
+        }
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(150)]
+        public async Task ShouldFailOnGetPokemon(int id)
+        {
+            // Arrange
+            var mockResult = new Refit.ApiResponse<DTOs.Pokemon>(
+                new HttpResponseMessage(HttpStatusCode.NotFound),
+                new DTOs.Pokemon(id, "teste", 0, 0),
+                new Refit.RefitSettings());
+
+            mockPokeApi.Setup(m => m.Get(id, CancellationToken.None))
+                .ReturnsAsync(mockResult);
+
+            // Act
+            var result = await controller.Get(id) as ObjectResult;
+
+            // Assert
+            Assert.Equal((int)HttpStatusCode.NotFound, result!.StatusCode);
         }
     }
 }
