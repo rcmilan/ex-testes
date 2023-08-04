@@ -45,6 +45,7 @@ namespace TestesApi.Unit
 
             Assert.Equal((int)HttpStatusCode.OK, result!.StatusCode);
         }
+
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
