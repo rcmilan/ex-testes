@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net;
 using System.Text.Json;
 using TestesApi.DTOs;
