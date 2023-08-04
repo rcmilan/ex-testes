@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Net;
 using TestesApi.Controllers;
+using TestesApi.DTOs;
 using TestesApi.HttpServices;
 using TestesApi.Services;
 
 namespace TestesApi.Unit
 {
-    public class PokemonsControllerUnitTests
+    public class PokemonsControllerUnitTests 
     {
         private readonly PokemonsController controller;
 
@@ -29,9 +30,9 @@ namespace TestesApi.Unit
         public async Task ShouldGetPokemon(int id)
         {
             // Arrange
-            var mockResult = new Refit.ApiResponse<DTOs.Pokemon>(
+            var mockResult = new Refit.ApiResponse<Pokemon>(
                 new HttpResponseMessage(HttpStatusCode.OK),
-                new DTOs.Pokemon(id, "teste", 0, 0),
+                new Pokemon(id, "teste", 0, 0),
                 new Refit.RefitSettings());
 
             mockPokeApi.Setup(m => m.Get(id, CancellationToken.None))
@@ -41,9 +42,9 @@ namespace TestesApi.Unit
             var result = await controller.Get(id) as OkObjectResult;
 
             // Assert
-            mockPokeApi.Verify(m => m.Get(id, CancellationToken.None), Times.AtLeastOnce);
-
             Assert.Equal((int)HttpStatusCode.OK, result!.StatusCode);
+
+            mockPokeApi.Verify(m => m.Get(id, CancellationToken.None), Times.Once);
         }
 
         [Theory]
@@ -53,9 +54,9 @@ namespace TestesApi.Unit
         public async Task ShouldFailOnGetPokemon(int id)
         {
             // Arrange
-            var mockResult = new Refit.ApiResponse<DTOs.Pokemon>(
+            var mockResult = new Refit.ApiResponse<Pokemon>(
                 new HttpResponseMessage(HttpStatusCode.NotFound),
-                new DTOs.Pokemon(id, "teste", 0, 0),
+                new Pokemon(id, "teste", 0, 0),
                 new Refit.RefitSettings());
 
             mockPokeApi.Setup(m => m.Get(id, CancellationToken.None))
@@ -66,6 +67,9 @@ namespace TestesApi.Unit
 
             // Assert
             Assert.Equal((int)HttpStatusCode.NotFound, result!.StatusCode);
+
+            mockPokeApi.Verify(m => m.Get(id, CancellationToken.None), Times.Once);
+            mockLogger.Verify(m => m.Log(It.IsAny<Pokemon>()), Times.Never);
         }
     }
 }
